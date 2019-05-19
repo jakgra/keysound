@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <time.h>
 
 void play_sound(char *keysym) {
   const char *exec_str = "aplay sounds/%s.wav";
@@ -24,7 +24,10 @@ int main() {
   char *keysym;
   int i;
   int j;
+  struct timespec sleep_well;
 
+  sleep_well.tv_sec = 0;
+  sleep_well.tv_nsec = 120000000;
   dis = XOpenDisplay(NULL);
   while (1) {
     XQueryKeymap(dis, keys_return);
@@ -35,7 +38,7 @@ int main() {
             keysym = XKeysymToString(XkbKeycodeToKeysym(dis, i * 8 + j, 0, 0));
             play_sound(keysym);
             printf("Playing sound for keycode %s\n", keysym);
-            sleep(1);
+            nanosleep(&sleep_well, NULL);
             goto outer_loop;
           }
         }
