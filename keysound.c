@@ -6,7 +6,7 @@
 #include <time.h>
 
 void play_sound(char *keysym) {
-  const char *exec_str = "aplay sounds/%s.wav";
+  const char *exec_str = "aplay sounds/%s.wav&";
   char *real_exec_str;
   int len;
 
